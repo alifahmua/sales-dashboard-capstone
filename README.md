@@ -31,8 +31,8 @@ Selain digunakan untuk visualisasi data, project ini juga dapat dimanfaatkan seb
 ## 📁 Struktur Project
 
 ```plaintext
-dashboard_capstone/
-├── assets/                      # Gambar dashboard & asset project
+sales-dashboard-capstone/
+├── assets/                      # Gambar dashboard
 │   ├── sales_summary.png
 │   ├── sidebar_filters.png
 │   ├── overview.png
@@ -146,13 +146,15 @@ Dashboard menyediakan business insights untuk membantu interpretasi visualisasi 
 ### 1. Clone repository project
 
 ```bash
-git clone <repository-link>
+git clone https://github.com/alifahmua/sales-dashboard-capstone
 ```
 
 ### 2. Masuk ke folder project
 
+Masuk ke folder project yang telah di-clone atau di-download.
+
 ```bash
-cd dash_caps
+cd sales-dashboard-capstone
 ```
 
 ### 3. Install dependencies
