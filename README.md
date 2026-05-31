@@ -196,8 +196,6 @@ http://localhost:8501
 
 ## 💡 Key Insights
 
-## 💡 Key Insights
-
 - Kategori **Groceries** menjadi kontributor utama terhadap total revenue.
 - Revenue harian menunjukkan **pola fluktuatif** dengan beberapa lonjakan yang mengindikasikan kemungkinan pengaruh musiman atau promo.
 - Analisis Pareto menunjukkan bahwa sebagian kecil produk menyumbang mayoritas revenue **(80/20 rule)**.
