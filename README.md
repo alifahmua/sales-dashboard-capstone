@@ -1,6 +1,6 @@
 # 📊 Sales Dashboard Analysis — UMKM Transaction Data
 
-Dashboard interaktif untuk menganalisis data transaksi penjualan UMKM, mencakup performa revenue, analisis produk terlaris, dan manajemen stok.
+Dashboard interaktif untuk menganalisis data transaksi penjualan UMKM, yang meliputi performa revenue, analisis produk terlaris, dan manajemen stok.
 
 ---
 
@@ -8,12 +8,14 @@ Dashboard interaktif untuk menganalisis data transaksi penjualan UMKM, mencakup 
 
 Project ini dikembangkan untuk membantu proses analisis bisnis retail melalui pendekatan berbasis data. Dataset telah melalui beberapa tahapan preprocessing seperti data cleaning, transformasi data, feature engineering, simulasi inventori, dan data merging sebelum divisualisasikan ke dalam dashboard interaktif.
 
-Dashboard ini menyediakan insight terkait:
-- Performa penjualan dan revenue bisnis
-- Tren revenue dan distribusi kategori produk
-- Analisis performa dan kontribusi produk
-- Monitoring inventori dan perputaran stok
-- Identifikasi fast-moving dan slow-moving products
+Dashboard ini menyediakan insight interaktif terkait:
+- Performa penjualan dan revenue harian
+- Analisis distribusi revenue per kategori
+- Identifikasi produk terlaris berdasarkan unit dan revenue
+- Analisis Pareto (80/20 rule) pada kontribusi revenue
+- Monitoring hubungan antara stok (Stock In & Stock End) dengan penjualan
+- Analisis fast-moving vs slow-moving products berdasarkan turnover
+- Sistem download dataset hasil filter untuk analisis lanjutan
 
 Selain digunakan untuk visualisasi data, project ini juga dapat dimanfaatkan sebagai media pembelajaran exploratory data analysis (EDA), analisis bisnis retail, serta pengembangan portfolio data science berbasis dashboard interaktif.
 
@@ -31,8 +33,8 @@ Selain digunakan untuk visualisasi data, project ini juga dapat dimanfaatkan seb
 ## 📁 Struktur Project
 
 ```plaintext
-sales-dashboard-capstone/
-├── assets/                      # Gambar dashboard
+dashboard_capstone/
+├── assets/                      # Gambar dashboard & asset project
 │   ├── sales_summary.png
 │   ├── sidebar_filters.png
 │   ├── overview.png
@@ -105,14 +107,21 @@ Visualisasi performa bisnis secara umum:
 #### Tab 2 — 🛒 Product Analysis
 Analisis performa produk:
 - **Top 10 Best Selling Products** → Produk dengan unit penjualan tertinggi
+- **Top 10 Revenue Products** → Produk dengan revenue tertinggi
 - **Pareto Analysis** → Produk penyumbang mayoritas revenue (80/20 rule)
 
 #### Tab 3 — 📦 Stock Analysis
 Analisis kondisi inventori:
+- **Stock In vs Units Sold** → Analisis hubungan antara stok masuk dan jumlah penjualan
+- **Stock End vs Units Sold** → Analisis hubungan antara sisa stok akhir dan penjualan produk
 - **Fast & Slow Moving Products** → Analisis perputaran stok
 
 ### ⬇️ Download Data
-Dashboard menyediakan download data untuk mengunduh dataset hasil filter atau analisis.
+Dashboard memungkinkan pengguna mengunduh:
+- Data hasil filter (Filtered Transactions)
+- Dataset transaksi bersih (Transactions Clean)
+- Dataset transaksi mentah (Transactions Raw)
+- Dataset stok mentah (Stock Raw)
 
 ### 📝 Business Insights
 Dashboard menyediakan business insights untuk membantu interpretasi visualisasi dan mendukung pengambilan keputusan bisnis berbasis data.
@@ -151,8 +160,6 @@ git clone https://github.com/alifahmua/sales-dashboard-capstone
 
 ### 2. Masuk ke folder project
 
-Masuk ke folder project yang telah di-clone atau di-download.
-
 ```bash
 cd sales-dashboard-capstone
 ```
@@ -189,11 +196,12 @@ http://localhost:8501
 
 ## 💡 Key Insights
 
-- Kategori **Groceries** memberikan kontribusi revenue terbesar.
-- Revenue harian menunjukkan **pola fluktuatif** dengan beberapa lonjakan signifikan.
-- Sebagian kecil produk menyumbang mayoritas revenue **(Pareto Principle)**.
-- Terdapat variasi **turnover** antar produk meskipun berasal dari kategori konsumsi rutin.
+## 💡 Key Insights
 
+- Kategori **Groceries** menjadi kontributor utama terhadap total revenue.
+- Revenue harian menunjukkan **pola fluktuatif** dengan beberapa lonjakan yang mengindikasikan kemungkinan pengaruh musiman atau promo.
+- Analisis Pareto menunjukkan bahwa sebagian kecil produk menyumbang mayoritas revenue **(80/20 rule)**.
+- Terdapat variasi signifikan pada perputaran stok **(turnover)**, yang menunjukkan perbedaan kecepatan penjualan antar produk.
 ---
 
 ## 📄 Informasi Dataset
@@ -216,4 +224,4 @@ http://localhost:8501
 
 ---
 
-> Sales Dashboard • By CC26-PSU282 🤘
+> Sales Dashboard • @ CC26-PSU282 🤘
