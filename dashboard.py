@@ -113,8 +113,9 @@ PRIMARY_COLOR = "#0B3558"
 st.title("📊 Sales Dashboard Analysis")
 
 st.markdown("""
-Dashboard interaktif untuk memantau performa revenue,
-analisis produk, dan manajemen stok.
+Dashboard interaktif untuk eksplorasi data transaksi retail,
+meliputi performa penjualan, revenue, analisis produk,
+serta manajemen inventori.
 """)
 
 # ==================================================
@@ -252,8 +253,9 @@ with tab1:
         config={"displayModeBar": True}
     )
 
-    st.info("""Revenue harian mengalami fluktuasi dengan beberapa lonjakan signifikan
-            pada periode tertentu, kemungkinan dipengaruhi faktor musiman atau periode promo.""")
+    st.info(
+        "Revenue harian menunjukkan pola fluktuatif pada beberapa periode."
+    )
 
     # ------------------------------
     # REVENUE BY CATEGORY
@@ -294,8 +296,7 @@ with tab1:
     ).iloc[0]["Category"]
 
     st.info(
-        f"""Category dengan revenue tertinggi adalah {top_category},
-        yang mendominasi kontribusi total pendapatan."""
+        f"{top_category} menjadi kategori dengan kontribusi revenue terbesar."
     )
 
 # ==================================================
@@ -336,13 +337,51 @@ with tab2:
         config={"displayModeBar": True}
     )
 
-    st.info("""Produk terlaris didominasi oleh kebutuhan harian dan
-            produk konsumsi cepat.""")
+    st.info(
+        """Produk tertentu menunjukkan jumlah unit terjual
+        yang lebih tinggi dibanding produk lainnya."""
+    )
+    
+    # ------------------------------
+    # TOP 10 REVENUE
+    # ------------------------------
+    st.subheader("💰 Top 10 Revenue Products") 
+    
+    top_rev = (
+        filtered_df.groupby("Product_Name")["Revenue"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(10)
+        .reset_index()
+    )
+    
+    fig_top_rev = px.bar(
+        top_rev, 
+        x="Revenue", 
+        y="Product_Name", 
+        orientation="h", 
+        color_discrete_sequence=[PRIMARY_COLOR] 
+    ) 
+    
+    fig_top_rev.update_layout( 
+        plot_bgcolor="white", 
+        paper_bgcolor="white", 
+        yaxis={"categoryorder": "total ascending"} 
+    ) 
+    
+    st.plotly_chart( 
+        fig_top_rev, 
+        use_container_width=True 
+    )
+
+    st.info(
+        "Sebagian revenue terkonsentrasi pada sejumlah produk tertentu."
+    )
     
     # ------------------------------
     # PARETO ANALYSIS
     # ------------------------------
-    st.subheader("📌 Pareto Analysis Revenue")
+    st.subheader(" 📚 Pareto Analysis Revenue")
 
     prod_rev = (
         filtered_df.groupby("Product_Name")["Revenue"]
@@ -383,13 +422,74 @@ with tab2:
         config={"displayModeBar": True}
     )
 
-    st.info("""Sekitar 80% total revenue dihasilkan oleh
-            sebagian kecil produk teratas, sesuai dengan Prinsip Pareto.""")
+    st.info(
+        "Sebagian kecil produk menyumbang mayoritas revenue."
+    )
 
 # ==================================================
 # TAB 3 - STOCK ANALYSIS
 # ==================================================
 with tab3:
+
+    # ------------------------------
+    # STOCK IN VS UNITS SOLD
+    # ------------------------------
+    st.subheader(" 📋 Stock In vs Units Sold")
+
+    fig_stock_in = px.scatter(
+        filtered_df,
+        x="Stock_In",
+        y="Units_Sold",
+        opacity=0.8
+    )
+
+    fig_stock_in.update_traces(
+        marker=dict(color=PRIMARY_COLOR)
+    )
+
+    fig_stock_in.update_layout(
+        plot_bgcolor="white",
+        paper_bgcolor="white"
+    )
+
+    st.plotly_chart(
+        fig_stock_in,
+        use_container_width=True
+    )
+
+    st.info(
+        "Hubungan antara stok masuk dan jumlah penjualan tidak terlalu kuat."
+    )
+
+    # ------------------------------
+    # STOCK END VS UNITS SOLD
+    # ------------------------------
+    st.subheader("📉 Stock End vs Units Sold")
+
+    fig_stock_end = px.scatter(
+        filtered_df,
+        x="Stock_End",
+        y="Units_Sold",
+        opacity=0.8
+    )
+
+    fig_stock_end.update_traces(
+        marker=dict(color=PRIMARY_COLOR)
+    )
+
+    fig_stock_end.update_layout(
+        plot_bgcolor="white",
+        paper_bgcolor="white"
+    )
+
+    st.plotly_chart(
+        fig_stock_end,
+        use_container_width=True
+    )
+
+    st.info(
+        "Stok akhir tinggi tidak selalu diikuti penjualan tinggi."
+    )
 
     # ------------------------------
     # FAST AND SLOW MOVING PRODUCTS
@@ -450,13 +550,9 @@ with tab3:
             }
         )
 
-    st.info("""
-    - **Fast Moving**: Produk dengan turnover mendekati 1,
-        artinya stok terjual hampir habis seluruhnya.
-    - **Slow Moving**: Produk dengan turnover lebih rendah,
-        mengindikasikan perputaran stok yang lebih lambat
-        dan berpotensi overstock.
-    """)
+    st.info(
+        "Produk menunjukkan tingkat perputaran stok yang berbeda-beda."
+    )
 
 # ==================================================
 # DOWNLOAD DATA
@@ -496,13 +592,17 @@ st.download_button(
 # ==================================================
 # BUSINESS INSIGHT
 # ==================================================
-st.subheader("📝 Business Insight")
+st.subheader("📝 Business Insights")
 
 st.info("""
-- Kategori Groceries memberikan kontribusi revenue terbesar.
-- Revenue harian menunjukkan pola fluktuatif dengan beberapa lonjakan signifikan.
-- Sebagian kecil produk menyumbang mayoritas revenue (Pareto Principle).
-- Terdapat variasi turnover antar produk meskipun berasal dari kategori konsumsi rutin.
+    - Produk dengan jumlah unit terjual tertinggi didominasi oleh kebutuhan harian, minuman, dan produk perawatan diri, yang menunjukkan tingginya permintaan pada kategori konsumsi rutin.
+    - Sebagian besar revenue berasal dari sejumlah kecil produk tertentu, mengindikasikan adanya produk dengan kontribusi pendapatan yang jauh lebih dominan dibanding lainnya.
+    - Revenue kategori menunjukkan dominasi kategori kebutuhan sehari-hari, terutama groceries dan produk konsumsi, sementara beberapa kategori lain berkontribusi lebih kecil terhadap total revenue. 
+    - Revenue harian memperlihatkan pola fluktuatif dengan beberapa lonjakan signifikan pada periode tertentu yang kemungkinan dipengaruhi faktor musiman, promo, maupun perubahan permintaan konsumen.
+    - Hubungan antara stok masuk dengan jumlah penjualan terlihat relatif lemah, sehingga volume stok belum tentu secara langsung menentukan tingginya penjualan.
+    - Produk dengan stok akhir tinggi namun penjualan rendah mengindikasikan potensi slow-moving stock atau overstock pada sebagian produk.
+    - Analisis Pareto menunjukkan sebagian besar revenue berasal dari sebagian kecil produk utama (80/20 rule).
+    - Tingkat turnover antar produk berbeda-beda, menunjukkan variasi kecepatan perputaran stok dalam inventori.
 """)
 
 # ==================================================
@@ -511,6 +611,6 @@ st.info("""
 st.markdown("""
 <hr>
 <center>
-Sales Dashboard • By CC26-PSU282🤘
+Sales Dashboard • @ CC26-PSU282🤘
 </center>
 """, unsafe_allow_html=True)
